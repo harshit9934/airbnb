@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <main
+      class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-xl"
+    >
+      <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
+        <%= editing ? "Edit" : "Register"%>  Home on Airbnb
+      </h1>
+      <form action="/host/<%= editing ? "edit-home" : "add-home" %>" method="POST"  enctype="multipart/form-data"   class="space-y-4">
+        <% if (editing) { %>
+          <input type="hidden" name="homeId" value="<%= home.id %>" />
+        <% } %>
+        <input
+          type="text"
+          name="homeName"
+          placeholder="Enter your home name"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          value="<%= editing ? home.homeName : '' %>"
+          required
+        />
+        <input
+          type="number"
+          name="price"
+          placeholder="Price per night"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          value="<%= editing ? home.price : '' %>"
+          required
+        />
+        <input
+          type="text"
+          name="location"
+          placeholder="Location"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          value="<%= editing ? home.location : '' %>"
+          required
+        />
+        <input
+          type="number"
+          name="rating"
+          placeholder="Rating (1-5)"
+          min="1"
+          max="5"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          value="<%= editing ? home.rating : '' %>"
+          required
+        />
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+        />
+        <input
+          type="file"
+          name="rules"
+          accept="application/pdf,.pdf"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+        />
+        <input
+          type="text"
+          
+          name="description"
+          placeholder="Description"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          value="<%= editing ? home.description : '' %>"
+          required
+        />
+        
+        <button
+          type="submit"
+          class="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300"
+        >
+          <%= editing ? "Save Changes" : "Add Home" %>
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

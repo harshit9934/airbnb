@@ -1,24 +1,34 @@
-// core module immport
-const path = require("path");
-
-//ecternal module import
+// external module import
 const express = require("express");
 
-//naya router banane ke liye
+// naya router banane ke liye
 const storeRouter = express.Router();
 
-// import pathUtils from utils folder
-const rootDir = require("../utils/pathUtils.js");
+// import controller local module
+const storeController = require("../controllers/storeController.js");
 
-//import controller  local module
-const homesController = require("../controllers/storeController.js");
+// middleware
+storeRouter.get("/", storeController.getIndex);
+storeRouter.get("/homes", storeController.getHomes);
 
-// 1  middleware
-storeRouter.get("/", homesController.getIndex);
-storeRouter.get("/homes", homesController.getHomes);
-//  for every path and   ye user ke liye hai
-storeRouter.get("/bookings", homesController.getBookings);
-storeRouter.get("/favourites", homesController.getFavouriteList);
+// user ke liye
+storeRouter.get("/bookings", storeController.getBookings);
+storeRouter.get("/favourites", storeController.getFavouriteList);
+
+// handle /homes/:homeId
+storeRouter.get("/homes/:homeId", storeController.getHomeDetails);
+
+// handle favourite POST request
+storeRouter.post("/favourites", storeController.postAddToFavourite);
+
+// delete home from favourite
+storeRouter.post(
+  "/favourites/delete/:homeId",
+  storeController.postRemoveFromFavourite,
+);
+
+// for home Rules
+storeRouter.get("/rules/:homeId", storeController.getHomeRules);
 
 // export
 module.exports = storeRouter;
